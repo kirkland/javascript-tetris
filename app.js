@@ -55,7 +55,7 @@ function insert_square_at_top(board) {
 
   var i;
   for (i = 0; i < 4; i++) {
-    board[cell_coordinates[i][0]][cell_coordinates[i][1]] = 1;
+    board[cell_coordinates[i][0]][cell_coordinates[i][1]] = new Cell(1);
   }
 
   render_board(board);
