@@ -11,3 +11,27 @@ td.empty {
 td.red {
   background-color: #FF3300;
 }
+
+td.blue {
+  background-color: #0000FF;
+}
+
+td.green {
+  background-color: #009933;
+}
+
+td.orange {
+  background-color: #FF9900;
+}
+
+td.purple {
+  background-color: #6600CC;
+}
+
+td.pink {
+  background-color: #FF00FF;
+}
+
+td.brown {
+  background-color: #996633;
+}

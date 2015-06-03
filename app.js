@@ -1,5 +1,14 @@
 var ROWS = 20;
 var COLUMNS = 10;
+var STATE_COLORS = ['empty', 'red', 'blue', 'green', 'orange', 'purple', 'pink', 'brown']
+
+var Cell = function(state) {
+  this.state = state;
+}
+
+Cell.prototype.set_state = function(new_state) {
+  this.state = new_state;
+}
 
 function initialize_board() {
   var rows = [];
@@ -11,7 +20,7 @@ function initialize_board() {
 
     var j;
     for (j = 1; j <= COLUMNS; j++) {
-       cells.push(0);
+      cells.push(new Cell(0));
     }
 
     rows.push(cells);
@@ -29,14 +38,7 @@ function render_board(board) {
 
     var j, cell, cell_class, state;
     for (j = 0; j < COLUMNS; j++) {
-
-      state = board[i][j];
-      if (state == 0) {
-        cell_class = 'empty';
-      } else if (state == 1) {
-        cell_class = 'red';
-      }
-
+      cell_class = STATE_COLORS[board[i][j].state];
       cell = $('<td class="' + cell_class + '"></td>');
       row.append(cell);
     }
@@ -58,6 +60,7 @@ function insert_square_at_top(board) {
 
   render_board(board);
 }
+
 
 var board = initialize_board();
 
