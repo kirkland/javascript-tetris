@@ -1,0 +1,13 @@
+td {
+  width: 20;
+  height: 20;
+  border: 1px black dotted;
+}
+
+td.empty {
+  background-color: #FFFFCC;
+}
+
+td.red {
+  background-color: #FF3300;
+}
