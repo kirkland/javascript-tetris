@@ -48,6 +48,17 @@ function render_board(board) {
   $('body').append(table);
 }
 
+function insert_square_at_top(board) {
+  var cell_coordinates = [[18,4], [18,5], [19,4], [19,5]];
+
+  var i;
+  for (i = 0; i < 4; i++) {
+    board[cell_coordinates[i][0]][cell_coordinates[i][1]] = 1;
+  }
+
+  render_board(board);
+}
+
 var board = initialize_board();
 
 $(function() {
