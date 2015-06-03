@@ -20,26 +20,36 @@ function initialize_board() {
   return rows;
 }
 
-function create_board(board) {
+function render_board(board) {
   var table = $('<table></table>');
 
   var i, row;
   for (i = 0; i < ROWS; i++) {
     row = $('<tr></tr>');
 
-    var j, cell;
-    for (j = 1; j <= COLUMNS; j++) {
-      cell = $('<td></td>');
+    var j, cell, cell_class, state;
+    for (j = 0; j < COLUMNS; j++) {
+
+      state = board[i][j];
+      if (state == 0) {
+        cell_class = 'empty';
+      } else if (state == 1) {
+        cell_class = 'red';
+      }
+
+      cell = $('<td class="' + cell_class + '"></td>');
       row.append(cell);
     }
 
     table.append(row);
   }
 
+  $('table').detach(); // Remove old board before drawing new one
   $('body').append(table);
 }
 
+var board = initialize_board();
+
 $(function() {
-  var board = initialize_board();
-  create_board(board);
+  render_board(board);
 });
