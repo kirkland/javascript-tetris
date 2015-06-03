@@ -20,5 +20,26 @@ function initialize_board() {
   return rows;
 }
 
-function draw_board() {
+function create_board(board) {
+  var table = $('<table></table>');
+
+  var i, row;
+  for (i = 0; i < ROWS; i++) {
+    row = $('<tr></tr>');
+
+    var j, cell;
+    for (j = 1; j <= COLUMNS; j++) {
+      cell = $('<td></td>');
+      row.append(cell);
+    }
+
+    table.append(row);
+  }
+
+  $('body').append(table);
 }
+
+$(function() {
+  var board = initialize_board();
+  create_board(board);
+});
