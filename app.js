@@ -41,7 +41,7 @@ function render_board(board) {
       row.append(cell);
     }
 
-    table.append(row);
+    table.prepend(row);
   }
 
   $('table').detach(); // Remove old board before drawing new one
