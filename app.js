@@ -66,35 +66,31 @@ function add_piece_to_board(board, piece) {
   }
 }
 
-function create_square(row, column) {
-  return new Piece(row, column, 1, [ [0,1], [-1,0], [-1,1] ]);
+function add_random_piece(board) {
+  var choice = Math.floor((Math.random() * 7)) % 7;
+  var starting_row = ROWS - 1;
+  var starting_column = Math.floor(COLUMNS / 2);
+  var piece;
+
+  if ( choice === 0 ) {
+    piece = new Piece(starting_row, starting_column, 1, [ [0,1], [-1,0], [-1,1] ]);
+  } else if ( choice === 1 ) {
+    piece = new Piece(starting_row, starting_column, 2, [ [-1,0], [-2,0], [-2,1] ]);
+  } else if ( choice === 2 ) {
+    piece = new Piece(starting_row, starting_column, 3, [ [-1,0], [-2,0], [-2,-1] ]);
+  } else if ( choice === 3 ) {
+    piece = new Piece(starting_row, starting_column, 4, [ [-1,0], [-1,-1], [-1,1] ]);
+  } else if ( choice === 4 ) {
+    piece = new Piece(starting_row, starting_column, 5, [ [-1,0], [-2,0], [-3,0] ]);
+  } else if ( choice === 5 ) {
+    piece = new Piece(starting_row, starting_column, 6, [ [0,1], [-1,1], [-1,2]]);
+  } else if ( choice === 6 ) {
+    piece = new Piece(starting_row, starting_column, 7, [ [-1,-1], [-1,0], [0,1] ]);
+  }
+
+  add_piece_to_board(board, piece);
+  render_board(board);
 }
-
-function create_l(row, column) {
-  return new Piece(row, column, 2, [ [-1,0], [-2,0], [-2,1] ]);
-}
-
-function create_backwards_l(row, column) {
-  return new Piece(row, column, 3, [ [-1,0], [-2,0], [-2,-1] ]);
-}
-
-function create_pyramid(row, column) {
-  return new Piece(row, column, 4, [ [-1,0], [-1,-1], [-1,1] ]);
-}
-
-function create_line(row, column) {
-  return new Piece(row, column, 5, [ [-1,0], [-2,0], [-3,0] ]);
-}
-
-function create_jagged(row, column) {
-  return new Piece(row, column, 6, [ [0,1], [-1,1], [-1,2]]);
-}
-
-function create_backwards_jagged(row, column) {
-  return new Piece(row, column, 7, [ [-1,-1], [-1,0], [0,1] ]);
-}
-
-
 
 var board = initialize_board();
 
