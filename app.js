@@ -10,6 +10,13 @@ Cell.prototype.set_state = function(new_state) {
   this.state = new_state;
 }
 
+var Piece = function(row, column, color, offsets) {
+  this.row = row;
+  this.column = column;
+  this.color = color;
+  this.offsets = offsets;
+}
+
 function initialize_board() {
   var rows = [];
 
@@ -50,17 +57,42 @@ function render_board(board) {
   $('body').append(table);
 }
 
-function insert_square_at_top(board) {
-  var cell_coordinates = [[18,4], [18,5], [19,4], [19,5]];
+function add_piece_to_board(board, piece) {
+  board[piece.row][piece.column] = new Cell(piece.color);
 
   var i;
-  for (i = 0; i < 4; i++) {
-    board[cell_coordinates[i][0]][cell_coordinates[i][1]] = new Cell(1);
+  for (i = 0; i < piece.offsets.length; i++) {
+    board[piece.row + piece.offsets[i][0]][piece.column + piece.offsets[i][1]] = new Cell(piece.color);
   }
-
-  render_board(board);
 }
 
+function create_square(row, column) {
+  return new Piece(row, column, 1, [ [0,1], [-1,0], [-1,1] ]);
+}
+
+function create_l(row, column) {
+  return new Piece(row, column, 2, [ [-1,0], [-2,0], [-2,1] ]);
+}
+
+function create_backwards_l(row, column) {
+  return new Piece(row, column, 2, [ [-1,0], [-2,0], [-2,-1] ]);
+}
+
+function create_pyramid(row, column) {
+  return new Piece(row, column, 2, [ [-1,0], [-1,-1], [-1,1] ]);
+}
+
+function create_line(row, column) {
+  return new Piece(row, column, 2, [ [-1,0], [-2,0], [-3,0] ]);
+}
+
+function create_jagged(row, column) {
+  return new Piece(row, column, 2, [ [0,1], [-1,1], [-1,2]]);
+}
+
+function create_backwards_jagged(row, column) {
+  return new Piece(row, column, 2, [ [-1,-1], [-1,0], [0,1] ]);
+}
 
 var board = initialize_board();
 
