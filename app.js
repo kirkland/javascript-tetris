@@ -75,24 +75,26 @@ function create_l(row, column) {
 }
 
 function create_backwards_l(row, column) {
-  return new Piece(row, column, 2, [ [-1,0], [-2,0], [-2,-1] ]);
+  return new Piece(row, column, 3, [ [-1,0], [-2,0], [-2,-1] ]);
 }
 
 function create_pyramid(row, column) {
-  return new Piece(row, column, 2, [ [-1,0], [-1,-1], [-1,1] ]);
+  return new Piece(row, column, 4, [ [-1,0], [-1,-1], [-1,1] ]);
 }
 
 function create_line(row, column) {
-  return new Piece(row, column, 2, [ [-1,0], [-2,0], [-3,0] ]);
+  return new Piece(row, column, 5, [ [-1,0], [-2,0], [-3,0] ]);
 }
 
 function create_jagged(row, column) {
-  return new Piece(row, column, 2, [ [0,1], [-1,1], [-1,2]]);
+  return new Piece(row, column, 6, [ [0,1], [-1,1], [-1,2]]);
 }
 
 function create_backwards_jagged(row, column) {
-  return new Piece(row, column, 2, [ [-1,-1], [-1,0], [0,1] ]);
+  return new Piece(row, column, 7, [ [-1,-1], [-1,0], [0,1] ]);
 }
+
+
 
 var board = initialize_board();
 
