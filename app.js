@@ -145,6 +145,24 @@ function add_random_piece(board) {
   }
 }
 
+function clock_tick(board, piece, interval_id) {
+  if ( piece ) {
+    if ( !move_piece(board, piece, 'down') ) {
+      piece = null;
+    }
+  } else {
+    piece = add_random_piece(board);
+
+    if ( piece === false ) {
+      console.log('Game Over');
+      clearInterval(interval_id);
+    }
+  }
+
+  render_board(board);
+  return piece;
+}
+
 var board = initialize_board();
 
 function start_game(board) {
@@ -162,20 +180,7 @@ function start_game(board) {
   });
 
   var interval_id = setInterval(function() {
-    if ( piece ) {
-      if ( !move_piece(board, piece, 'down') ) {
-        piece = null;
-      }
-    } else {
-      piece = add_random_piece(board);
-
-      if ( piece === false ) {
-        console.log('Game Over');
-        clearInterval(interval_id);
-      }
-    }
-
-    render_board(board);
+    piece = clock_tick(board, piece, interval_id);
   }, 500);
 }
 
