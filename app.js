@@ -41,27 +41,41 @@ function render_board(board) {
   $('body').append(table);
 }
 
-function add_piece_to_board(board, piece) {
-  // Clear out current piece
-  if (board.current_piece) {
-    var i;
-    var piece = board.current_piece;
-
-    board[piece.row][piece.column] = 0;
-    for (i = 0; i < piece.offsets.length; i++) {
-      board[piece.row + piece.offsets[i][0]][piece.column + piece.offsets[i][1]] = 0;
-    }
+function add_piece(board, piece) {
+  if ( board.current_piece) {
+    color_piece(board, board.current_piece, 0);
   }
 
   board.current_piece = piece;
+  color_piece(board, board.current_piece, piece.color);
+}
 
+function color_piece(board, piece, color) {
   var i;
   var piece = board.current_piece;
 
-  board[piece.row][piece.column] = piece.color;
+  board[piece.row][piece.column] = color;
   for (i = 0; i < piece.offsets.length; i++) {
-    board[piece.row + piece.offsets[i][0]][piece.column + piece.offsets[i][1]] = piece.color;
+    board[piece.row + piece.offsets[i][0]][piece.column + piece.offsets[i][1]] = color;
   }
+}
+
+function move_piece(board, direction) {
+  if ( direction === 'left' ) {
+    color_piece(board, board.current_piece, 0);
+    board.current_piece.column = board.current_piece.column - 1;
+    color_piece(board, board.current_piece, board.current_piece.color);
+  } else if ( direction === 'right' ) {
+    color_piece(board, board.current_piece, 0);
+    board.current_piece.column = board.current_piece.column + 1;
+    color_piece(board, board.current_piece, board.current_piece.color);
+  } else if ( direction == 'down' ) {
+    color_piece(board, board.current_piece, 0);
+    board.current_piece.row = board.current_piece.row - 1;
+    color_piece(board, board.current_piece, board.current_piece.color);
+  }
+
+  render_board(board);
 }
 
 function add_random_piece(board) {
@@ -88,20 +102,8 @@ function add_random_piece(board) {
     piece.offsets = [ [-1,-1], [-1,0], [0,1] ]
   }
 
-  add_piece_to_board(board, piece);
+  add_piece(board, piece);
   render_board(board);
-}
-
-function move_piece(board, direction) {
-  if ( direction === 'left' ) {
-    board.current_piece.column = board.current_piece.column - 1;
-  } else if ( direction === 'right' ) {
-    board.current_piece.column = board.current_piece.column + 1;
-  } else if ( direction == 'down' ) {
-    board.current_piece.row = board.current_piece.row - 1;
-  }
-
-  add_piece_to_board(board, board.current_piece);
 }
 
 var board = initialize_board();
