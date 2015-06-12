@@ -82,15 +82,28 @@ function move_piece(board, piece, direction) {
 
   if ( direction === 'left' ) {
     piece.column = piece.column - 1;
+    if ( !is_valid_piece(board, piece) ) {
+      piece.column = piece.column + 1;
+      return false;
+    }
   } else if ( direction === 'right' ) {
     piece.column = piece.column + 1;
+    if ( !is_valid_piece(board, piece) ) {
+      piece.column = piece.column - 1;
+      return false;
+    }
   } else if ( direction == 'down' ) {
     piece.row = piece.row - 1;
+    if ( !is_valid_piece(board, piece) ) {
+      piece.row = piece.row + 1;
+      return false;
+    }
   }
 
   color_piece(board, piece, piece.color);
 
   render_board(board);
+  return true
 }
 
 function add_random_piece(board) {
