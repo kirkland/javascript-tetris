@@ -151,6 +151,14 @@ function start_game(board) {
   render_board(board);
   var piece;
 
+  $('body').keydown(function(e) {
+    if ( e.keyCode == 37 ) { // left arrow
+      move_piece(board, piece, 'left');
+    } else if ( e.keyCode == 39 ) { // right arrow
+      move_piece(board, piece, 'right');
+    }
+  });
+
   setInterval(function() {
     if ( piece ) {
       if ( !move_piece(board, piece, 'down') ) {
