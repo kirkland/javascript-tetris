@@ -53,12 +53,25 @@ function piece_coordinates(piece) {
 }
 
 function is_valid_piece(board, piece) {
+  var i;
+  var coordinates = piece_coordinates(piece);
+
+  for (i = 0; i < coordinates.length; i++) {
+    if ( coordinates[i][0] >= ROWS ||
+         coordinates[i][1] >= COLUMNS ||
+         coordinates[i][0] < 0 ||
+         coordinates[i][1] < 0 ) {
+      return false;
+    }
+  }
+
+  return true;
 }
 
 function color_piece(board, piece, color) {
   var i;
-
   var coordinates = piece_coordinates(piece);
+
   for (i = 0; i < coordinates.length; i++) {
     board[coordinates[i][0]][coordinates[i][1]] = color;
   }
