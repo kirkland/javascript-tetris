@@ -63,6 +63,10 @@ function is_valid_piece(board, piece) {
          coordinates[i][1] < 0 ) {
       return false;
     }
+
+    if ( board[coordinates[i][0]][coordinates[i][1]] != 0 ) {
+      return false;
+    }
   }
 
   return true;
