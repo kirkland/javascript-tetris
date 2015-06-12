@@ -1,6 +1,7 @@
 var ROWS = 20;
 var COLUMNS = 10;
 var STATE_COLORS = ['empty', 'red', 'blue', 'green', 'orange', 'purple', 'pink', 'brown']
+var CLOCK_RATE = 200;
 
 function initialize_board() {
   var rows = [];
@@ -167,7 +168,7 @@ var board = initialize_board();
 
 function start_game(board) {
   render_board(board);
-  var piece;
+  var interval_id, piece;
 
   $('body').keydown(function(e) {
     if ( e.keyCode == 37 ) { // left arrow
@@ -176,12 +177,16 @@ function start_game(board) {
       move_piece(board, piece, 'right');
     } else if ( e.keyCode == 40 ) {
       move_piece(board, piece, 'down');
+      clearInterval(interval_id);
+      interval_id = setInterval(function() {
+        piece = clock_tick(board, piece, interval_id);
+      }, CLOCK_RATE);
     }
   });
 
-  var interval_id = setInterval(function() {
+  interval_id = setInterval(function() {
     piece = clock_tick(board, piece, interval_id);
-  }, 500);
+  }, CLOCK_RATE);
 }
 
 $(function() {
