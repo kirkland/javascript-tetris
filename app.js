@@ -141,7 +141,7 @@ function add_random_piece(board) {
     render_board(board);
     return piece;
   } else {
-    console.log("Game Over");
+    return false;
   }
 }
 
@@ -156,16 +156,23 @@ function start_game(board) {
       move_piece(board, piece, 'left');
     } else if ( e.keyCode == 39 ) { // right arrow
       move_piece(board, piece, 'right');
+    } else if ( e.keyCode == 40 ) {
+      move_piece(board, piece, 'down');
     }
   });
 
-  setInterval(function() {
+  var interval_id = setInterval(function() {
     if ( piece ) {
       if ( !move_piece(board, piece, 'down') ) {
         piece = null;
       }
     } else {
       piece = add_random_piece(board);
+
+      if ( piece === false ) {
+        console.log('Game Over');
+        clearInterval(interval_id);
+      }
     }
 
     render_board(board);
