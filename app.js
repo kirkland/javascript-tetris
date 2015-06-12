@@ -37,23 +37,31 @@ function render_board(board) {
     table.prepend(row);
   }
 
-  // Render current piece
-  if (board.current_piece) {
-    var i;
-    var piece = board.current_piece;
-
-    board[piece.row][piece.column] = piece.color;
-    for (i = 0; i < piece.offsets.length; i++) {
-      board[piece.row + piece.offsets[i][0]][piece.column + piece.offsets[i][1]] = piece.color;
-    }
-  }
-
   $('table').detach();
   $('body').append(table);
 }
 
 function add_piece_to_board(board, piece) {
+  // Clear out current piece
+  if (board.current_piece) {
+    var i;
+    var piece = board.current_piece;
+
+    board[piece.row][piece.column] = 0;
+    for (i = 0; i < piece.offsets.length; i++) {
+      board[piece.row + piece.offsets[i][0]][piece.column + piece.offsets[i][1]] = 0;
+    }
+  }
+
   board.current_piece = piece;
+
+  var i;
+  var piece = board.current_piece;
+
+  board[piece.row][piece.column] = piece.color;
+  for (i = 0; i < piece.offsets.length; i++) {
+    board[piece.row + piece.offsets[i][0]][piece.column + piece.offsets[i][1]] = piece.color;
+  }
 }
 
 function add_random_piece(board) {
@@ -82,6 +90,18 @@ function add_random_piece(board) {
 
   add_piece_to_board(board, piece);
   render_board(board);
+}
+
+function move_piece(board, direction) {
+  if ( direction === 'left' ) {
+    board.current_piece.column = board.current_piece.column - 1;
+  } else if ( direction === 'right' ) {
+    board.current_piece.column = board.current_piece.column + 1;
+  } else if ( direction == 'down' ) {
+    board.current_piece.row = board.current_piece.row - 1;
+  }
+
+  add_piece_to_board(board, board.current_piece);
 }
 
 var board = initialize_board();
