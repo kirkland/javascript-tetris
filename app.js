@@ -41,12 +41,26 @@ function render_board(board) {
   $('body').append(table);
 }
 
+function piece_coordinates(piece) {
+  var coordinates = [];
+  coordinates.push([piece.row, piece.column]);
+
+  for (i = 0; i < piece.offsets.length; i++) {
+    coordinates.push([piece.row + piece.offsets[i][0], piece.column + piece.offsets[i][1]]);
+  }
+
+  return coordinates;
+}
+
+function is_valid_piece(board, piece) {
+}
+
 function color_piece(board, piece, color) {
   var i;
 
-  board[piece.row][piece.column] = color;
-  for (i = 0; i < piece.offsets.length; i++) {
-    board[piece.row + piece.offsets[i][0]][piece.column + piece.offsets[i][1]] = color;
+  var coordinates = piece_coordinates(piece);
+  for (i = 0; i < coordinates.length; i++) {
+    board[coordinates[i][0]][coordinates[i][1]] = color;
   }
 }
 
