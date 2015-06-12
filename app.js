@@ -88,24 +88,26 @@ function move_piece(board, piece, direction) {
     piece.column = piece.column - 1;
     if ( !is_valid_piece(board, piece) ) {
       piece.column = piece.column + 1;
+      color_piece(board, piece, piece.color);
       return false;
     }
   } else if ( direction === 'right' ) {
     piece.column = piece.column + 1;
     if ( !is_valid_piece(board, piece) ) {
       piece.column = piece.column - 1;
+      color_piece(board, piece, piece.color);
       return false;
     }
   } else if ( direction == 'down' ) {
     piece.row = piece.row - 1;
     if ( !is_valid_piece(board, piece) ) {
       piece.row = piece.row + 1;
+      color_piece(board, piece, piece.color);
       return false;
     }
   }
 
   color_piece(board, piece, piece.color);
-
   render_board(board);
   return true
 }
@@ -134,13 +136,34 @@ function add_random_piece(board) {
     piece.offsets = [ [-1,-1], [-1,0], [0,1] ]
   }
 
-  color_piece(board, piece, piece.color);
-  render_board(board);
-  return piece;
+  if ( is_valid_piece(board, piece) ) {
+    color_piece(board, piece, piece.color);
+    render_board(board);
+    return piece;
+  } else {
+    console.log("Game Over");
+  }
 }
 
 var board = initialize_board();
 
-$(function() {
+function start_game(board) {
   render_board(board);
+  var piece;
+
+  setInterval(function() {
+    if ( piece ) {
+      if ( !move_piece(board, piece, 'down') ) {
+        piece = null;
+      }
+    } else {
+      piece = add_random_piece(board);
+    }
+
+    render_board(board);
+  }, 500);
+}
+
+$(function() {
+  start_game(board);
 });
