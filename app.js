@@ -295,7 +295,6 @@ function clock_tick(game) {
   }
 
   render_board(game.board);
-  return game.current_piece;
 }
 
 function stop_clock(game) {
@@ -304,7 +303,7 @@ function stop_clock(game) {
 
 function start_clock(game) {
   game.interval_id = setInterval(function() {
-    game.current_piece = clock_tick(game);
+    clock_tick(game);
   }, CLOCK_RATE);
 }
 
