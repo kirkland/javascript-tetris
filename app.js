@@ -286,6 +286,7 @@ function clock_tick(game) {
   if ( game.current_piece ) {
     if ( !move_piece(game.board, game.current_piece, 'down') ) {
       game.current_piece = null;
+      game.current_piece = add_random_piece(game.board);
     }
   } else {
     game.current_piece = add_random_piece(game.board);
