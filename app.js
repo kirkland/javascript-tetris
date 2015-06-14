@@ -325,8 +325,9 @@ function start_game() {
     } else if ( e.keyCode === 39 ) { // right arrow
       move_piece(game.board, game.current_piece, 'right');
     } else if ( e.keyCode === 40 ) {
-      move_piece(game.board, game.current_piece, 'down');
-      reset_clock(game);
+      if ( move_piece(game.board, game.current_piece, 'down') ) {
+        reset_clock(game);
+      }
     } else if ( e.keyCode === 65 || e.keyCode === 38 ) { // 65 = letter a, 38 = up arrow
       rotate_piece_on_board(game.board, game.current_piece, true);
     } else if ( e.keyCode === 83 ) { // letter s
