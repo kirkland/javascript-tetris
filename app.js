@@ -298,6 +298,15 @@ function clock_tick(board, piece, interval_id) {
   return piece;
 }
 
+function reset_clock(game) {
+  if ( game.interval_id ) {
+    clearInterval(game.interval_id);
+  }
+
+  game.interval_id = setInterval(function() {
+    game.current_piece = clock_tick(game.board, game.current_piece, game.interval_id);
+  }, CLOCK_RATE);
+}
 
 function start_game() {
   var game = {};
@@ -312,10 +321,7 @@ function start_game() {
       move_piece(game.board, game.current_piece, 'right');
     } else if ( e.keyCode === 40 ) {
       move_piece(game.board, game.current_piece, 'down');
-      clearInterval(game.interval_id);
-      game.interval_id = setInterval(function() {
-        game.current_piece = clock_tick(game.board, game.current_piece, game.interval_id);
-      }, CLOCK_RATE);
+      reset_clock(game);
     } else if ( e.keyCode === 65 || e.keyCode === 38 ) { // 65 = letter a, 38 = up arrow
       rotate_piece_on_board(game.board, game.current_piece, true);
     } else if ( e.keyCode === 83 ) { // letter s
@@ -323,9 +329,7 @@ function start_game() {
     }
   });
 
-  game.interval_id = setInterval(function() {
-    game.current_piece = clock_tick(game.board, game.current_piece, game.interval_id);
-  }, CLOCK_RATE);
+  reset_clock(game);
 }
 
 $(function() {
