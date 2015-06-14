@@ -46,8 +46,10 @@ function piece_coordinates(piece) {
   var coordinates = [];
   coordinates.push([piece.row, piece.column]);
 
-  for (i = 0; i < piece.offsets.length; i++) {
-    coordinates.push([piece.row + piece.offsets[i][0], piece.column + piece.offsets[i][1]]);
+  var offsets = piece.rotation_states[piece.rotation_state_index];
+
+  for (i = 0; i < offsets.length; i++) {
+    coordinates.push([piece.row + offsets[i][0], piece.column + offsets[i][1]]);
   }
 
   return coordinates;
@@ -117,28 +119,26 @@ function add_random_piece(board) {
   var choice = Math.floor((Math.random() * 7)) % 7;
 
   var piece = {};
-  piece.row = ROWS - 1;
-  piece.column = Math.floor(COLUMNS / 2);
-
   piece.color = choice + 1;
 
   if ( choice === 0 ) {
-    piece.offsets = [ [0,1], [-1,0], [-1,1] ]
+    piece = create_square();
   } else if ( choice === 1 ) {
     piece.offsets = [ [-1,0], [-2,0], [-2,1] ]
   } else if ( choice === 2 ) {
     piece.offsets = [ [-1,0], [-2,0], [-2,-1] ]
   } else if ( choice === 3 ) {
-    piece.offsets = [ [-1,0], [-1,-1], [-1,1] ]
+    piece.offsets = [ [-1,0], [-1,-1], [-1,1] ] // Pyramid; change to rotate around middle of base
   } else if ( choice === 4 ) {
     piece.offsets = [ [-1,0], [-2,0], [-3,0] ]
   } else if ( choice === 5 ) {
-    piece.offsets = [ [0,1], [-1,1], [-1,2] ]
+    piece = create_backwards_s_piece();
   } else if ( choice === 6 ) {
     piece = create_s_piece();
-    piece.row = ROWS - 1;
-    piece.column = Math.floor(COLUMNS / 2);
   }
+
+  piece.row = ROWS - 1;
+  piece.column = Math.floor(COLUMNS / 2);
 
   if ( is_valid_piece(board, piece) ) {
     color_piece(board, piece, piece.color);
@@ -158,12 +158,39 @@ function create_s_piece() {
     [[-1, 0], [ 0, 1], [ 1,  1]]
   ]
 
-  piece.offsets = piece.rotation_states[0];
+  piece.rotation_state_index = 0;
 
   return piece;
 }
 
-function rotate_piece_left(piece) {
+function create_backwards_s_piece() {
+  var piece = {};
+  piece.color = 6;
+
+  piece.rotation_states = [
+    [[ 0, -1], [-1,  0], [-1,  1]],
+    [[ 1,  0], [ 0, -1], [-1, -1]]
+  ]
+
+  piece.rotation_state_index = 0;
+
+  return piece;
+}
+
+function create_square() {
+  var piece = {};
+  piece.color = 1;
+
+  piece.rotation_states = [
+    [[0,1], [-1,0], [-1,1]]
+  ]
+
+  piece.rotation_state_index = 0;
+
+  return piece;
+}
+
+function rotate_piece(piece, direction) {
 }
 
 function clock_tick(board, piece, interval_id) {
