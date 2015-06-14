@@ -304,28 +304,27 @@ function start_game() {
   game.board = initialize_board();
 
   render_board(game.board);
-  var interval_id, piece;
 
   $('body').keydown(function(e) {
     if ( e.keyCode === 37 ) { // left arrow
-      move_piece(game.board, piece, 'left');
+      move_piece(game.board, game.current_piece, 'left');
     } else if ( e.keyCode === 39 ) { // right arrow
-      move_piece(game.board, piece, 'right');
+      move_piece(game.board, game.current_piece, 'right');
     } else if ( e.keyCode === 40 ) {
-      move_piece(game.board, piece, 'down');
+      move_piece(game.board, game.current_piece, 'down');
       clearInterval(interval_id);
       interval_id = setInterval(function() {
-        piece = clock_tick(game.board, piece, interval_id);
+        game.current_piece = clock_tick(game.board, game.current_piece, interval_id);
       }, CLOCK_RATE);
     } else if ( e.keyCode === 65 || e.keyCode === 38 ) { // 65 = letter a, 38 = up arrow
-      rotate_piece_on_board(game.board, piece, true);
+      rotate_piece_on_board(game.board, game.current_piece, true);
     } else if ( e.keyCode === 83 ) { // letter s
-      rotate_piece_on_board(game.board, piece, false);
+      rotate_piece_on_board(game.board, game.current_piece, false);
     }
   });
 
   interval_id = setInterval(function() {
-    piece = clock_tick(game.board, piece, interval_id);
+    game.current_piece = clock_tick(game.board, game.current_piece, interval_id);
   }, CLOCK_RATE);
 }
 
