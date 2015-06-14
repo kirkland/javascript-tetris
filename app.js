@@ -350,13 +350,13 @@ function move_rows_down(board, row_index) {
 
 function clear_full_rows(board) {
   var i;
-  for ( i = 0; i < board.length; i++ ) {
+  for ( i = board.length - 1; i >= 0; i-- ) {
     if ( is_full_row(board[i]) ) {
       clear_row(board[i]);
       move_rows_down(board, i);
-      render_board(board);
     }
   }
+  render_board(board);
 }
 
 function start_game() {
