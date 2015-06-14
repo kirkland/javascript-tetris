@@ -1,7 +1,7 @@
 var ROWS = 20;
 var COLUMNS = 10;
 var STATE_COLORS = ['empty', 'red', 'blue', 'green', 'orange', 'purple', 'pink', 'brown']
-var CLOCK_RATE = 1000;
+var CLOCK_RATE = 500;
 
 function initialize_board() {
   var rows = [];
@@ -281,6 +281,8 @@ function rotate_piece_on_board(board, piece, left) {
 }
 
 function clock_tick(game) {
+  clear_full_rows(game.board);
+
   if ( game.current_piece ) {
     if ( !move_piece(game.board, game.current_piece, 'down') ) {
       game.current_piece = null;
@@ -310,6 +312,50 @@ function start_clock(game) {
 function reset_clock(game) {
   stop_clock(game);
   start_clock(game);
+}
+
+function is_full_row(row) {
+  var i;
+
+  for ( i = 0; i < row.length; i++) {
+    if ( row[i] === 0 ) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
+function clear_row(row) {
+  var i;
+
+  for ( i = 0; i < row.length; i++) {
+    row[i] = 0
+  }
+}
+
+function move_rows_down(board, row_index) {
+  board.splice(row_index, 1);
+
+  cells = []
+
+  var j;
+  for (j = 1; j <= COLUMNS; j++) {
+    cells.push(0);
+  }
+
+  board.push(cells);
+}
+
+function clear_full_rows(board) {
+  var i;
+  for ( i = 0; i < board.length; i++ ) {
+    if ( is_full_row(board[i]) ) {
+      clear_row(board[i]);
+      move_rows_down(board, i);
+      render_board(board);
+    }
+  }
 }
 
 function start_game() {
