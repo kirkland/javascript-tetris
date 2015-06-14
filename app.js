@@ -138,7 +138,10 @@ function add_random_piece(board) {
   } else if ( choice === 5 ) {
     piece.offsets = [ [0,1], [-1,1], [-1,2] ]
   } else if ( choice === 6 ) {
-    piece.offsets = [ [-1,-1], [-1,0], [0,1] ]
+    piece = create_s_piece();
+    piece.row = ROWS - 1;
+    piece.column = Math.floor(COLUMNS / 2);
+    piece.type = choice;
   }
 
   if ( is_valid_piece(board, piece) ) {
@@ -150,7 +153,25 @@ function add_random_piece(board) {
   }
 }
 
+function create_s_piece() {
+  var piece = {};
+  piece.color = function() {
+    return 7;
+  }
+
+  piece.rotation_states = [
+    [[ 0, 1], [-1, 0], [-1, -1]],
+    [[-1, 0], [ 0, 1], [ 1,  1]]
+  ]
+
+  piece.offsets = piece.rotation_states[0];
+
+  return piece;
+}
+
 function rotate_piece_left(piece) {
+  if ( piece.type == 0 ) {
+  }
 }
 
 function clock_tick(board, piece, interval_id) {
