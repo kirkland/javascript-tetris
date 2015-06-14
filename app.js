@@ -89,26 +89,26 @@ function move_piece(board, piece, direction) {
     piece.column = piece.column - 1;
     if ( !is_valid_piece(board, piece) ) {
       piece.column = piece.column + 1;
-      color_piece(board, piece, piece.color());
+      color_piece(board, piece, piece.color);
       return false;
     }
   } else if ( direction === 'right' ) {
     piece.column = piece.column + 1;
     if ( !is_valid_piece(board, piece) ) {
       piece.column = piece.column - 1;
-      color_piece(board, piece, piece.color());
+      color_piece(board, piece, piece.color);
       return false;
     }
   } else if ( direction == 'down' ) {
     piece.row = piece.row - 1;
     if ( !is_valid_piece(board, piece) ) {
       piece.row = piece.row + 1;
-      color_piece(board, piece, piece.color());
+      color_piece(board, piece, piece.color);
       return false;
     }
   }
 
-  color_piece(board, piece, piece.color());
+  color_piece(board, piece, piece.color);
   render_board(board);
   return true
 }
@@ -119,11 +119,8 @@ function add_random_piece(board) {
   var piece = {};
   piece.row = ROWS - 1;
   piece.column = Math.floor(COLUMNS / 2);
-  piece.type = choice;
 
-  piece.color = function() {
-    return this.type + 1;
-  }
+  piece.color = choice + 1;
 
   if ( choice === 0 ) {
     piece.offsets = [ [0,1], [-1,0], [-1,1] ]
@@ -141,11 +138,10 @@ function add_random_piece(board) {
     piece = create_s_piece();
     piece.row = ROWS - 1;
     piece.column = Math.floor(COLUMNS / 2);
-    piece.type = choice;
   }
 
   if ( is_valid_piece(board, piece) ) {
-    color_piece(board, piece, piece.color());
+    color_piece(board, piece, piece.color);
     render_board(board);
     return piece;
   } else {
@@ -155,9 +151,7 @@ function add_random_piece(board) {
 
 function create_s_piece() {
   var piece = {};
-  piece.color = function() {
-    return 7;
-  }
+  piece.color = 7;
 
   piece.rotation_states = [
     [[ 0, 1], [-1, 0], [-1, -1]],
@@ -170,8 +164,6 @@ function create_s_piece() {
 }
 
 function rotate_piece_left(piece) {
-  if ( piece.type == 0 ) {
-  }
 }
 
 function clock_tick(board, piece, interval_id) {
