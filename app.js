@@ -153,7 +153,7 @@ function create_s_piece() {
 
   piece.rotation_states = [
     [[ 0, 1], [-1, 0], [-1, -1]],
-    [[-1, 0], [ 0, 1], [ 1,  1]]
+    [[ 1, 0], [0, 1], [-1, 1]]
   ]
 
   piece.rotation_state_index = 0;
@@ -241,7 +241,7 @@ function create_line() {
   piece.color = 7;
 
   piece.rotation_states = [
-    [[1, 0],[1,0],[2,0]],
+    [[-1, 0],[1,0],[2,0]],
     [[0,-1],[0,1],[0,2]]
   ]
 
@@ -317,7 +317,7 @@ function start_game(board) {
       }, CLOCK_RATE);
     } else if ( e.keyCode === 65 || e.keyCode === 38 ) { // 65 = letter a, 38 = up arrow
       rotate_piece_on_board(board, piece, true);
-    } else if ( e.keycode === 83 ) { // letter s
+    } else if ( e.keyCode === 83 ) { // letter s
       rotate_piece_on_board(board, piece, false);
     }
   });
