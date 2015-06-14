@@ -89,26 +89,26 @@ function move_piece(board, piece, direction) {
     piece.column = piece.column - 1;
     if ( !is_valid_piece(board, piece) ) {
       piece.column = piece.column + 1;
-      color_piece(board, piece, piece.color);
+      color_piece(board, piece, piece.color());
       return false;
     }
   } else if ( direction === 'right' ) {
     piece.column = piece.column + 1;
     if ( !is_valid_piece(board, piece) ) {
       piece.column = piece.column - 1;
-      color_piece(board, piece, piece.color);
+      color_piece(board, piece, piece.color());
       return false;
     }
   } else if ( direction == 'down' ) {
     piece.row = piece.row - 1;
     if ( !is_valid_piece(board, piece) ) {
       piece.row = piece.row + 1;
-      color_piece(board, piece, piece.color);
+      color_piece(board, piece, piece.color());
       return false;
     }
   }
 
-  color_piece(board, piece, piece.color);
+  color_piece(board, piece, piece.color());
   render_board(board);
   return true
 }
@@ -119,7 +119,11 @@ function add_random_piece(board) {
   var piece = {};
   piece.row = ROWS - 1;
   piece.column = Math.floor(COLUMNS / 2);
-  piece.color = choice + 1;
+  piece.type = choice;
+
+  piece.color = function() {
+    return this.type + 1;
+  }
 
   if ( choice === 0 ) {
     piece.offsets = [ [0,1], [-1,0], [-1,1] ]
@@ -138,12 +142,15 @@ function add_random_piece(board) {
   }
 
   if ( is_valid_piece(board, piece) ) {
-    color_piece(board, piece, piece.color);
+    color_piece(board, piece, piece.color());
     render_board(board);
     return piece;
   } else {
     return false;
   }
+}
+
+function rotate_piece_left(piece) {
 }
 
 function clock_tick(board, piece, interval_id) {
