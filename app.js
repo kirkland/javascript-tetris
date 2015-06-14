@@ -1,7 +1,7 @@
 var ROWS = 20;
 var COLUMNS = 10;
 var STATE_COLORS = ['empty', 'red', 'blue', 'green', 'orange', 'purple', 'pink', 'brown']
-var CLOCK_RATE = 200;
+var CLOCK_RATE = 1000;
 
 function initialize_board() {
   var rows = [];
@@ -250,7 +250,34 @@ function create_line() {
   return piece;
 }
 
-function rotate_piece(piece, direction) {
+function rotate_piece(piece, left) {
+  if ( left ) {
+    if ( piece.rotation_state_index === piece.rotation_states.length - 1) {
+      piece.rotation_state_index = 0;
+    } else {
+      piece.rotation_state_index = piece.rotation_state_index + 1;
+    }
+  } else {
+    if ( piece.rotation_state_index === 0) {
+      piece.rotation_state_index = piece.rotation_states.length - 1;
+    } else {
+      piece.rotation_state_index = piece.rotation_state_index - 1;
+    }
+  }
+}
+
+function rotate_piece_on_board(board, piece, left) {
+  color_piece(board, piece, 0);
+  rotate_piece(piece, left);
+
+  if ( !is_valid_piece(board, piece) ) {
+    rotate_piece(piece, !left);
+    return false;
+  }
+
+  color_piece(board, piece, piece.color);
+  render_board(board);
+  return true
 }
 
 function clock_tick(board, piece, interval_id) {
@@ -278,16 +305,20 @@ function start_game(board) {
   var interval_id, piece;
 
   $('body').keydown(function(e) {
-    if ( e.keyCode == 37 ) { // left arrow
+    if ( e.keyCode === 37 ) { // left arrow
       move_piece(board, piece, 'left');
-    } else if ( e.keyCode == 39 ) { // right arrow
+    } else if ( e.keyCode === 39 ) { // right arrow
       move_piece(board, piece, 'right');
-    } else if ( e.keyCode == 40 ) {
+    } else if ( e.keyCode === 40 ) {
       move_piece(board, piece, 'down');
       clearInterval(interval_id);
       interval_id = setInterval(function() {
         piece = clock_tick(board, piece, interval_id);
       }, CLOCK_RATE);
+    } else if ( e.keyCode === 65 || e.keyCode === 38 ) { // 65 = letter a, 38 = up arrow
+      rotate_piece_on_board(board, piece, true);
+    } else if ( e.keycode === 83 ) { // letter s
+      rotate_piece_on_board(board, piece, false);
     }
   });
 
