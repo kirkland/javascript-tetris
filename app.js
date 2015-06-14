@@ -326,6 +326,10 @@ function start_game() {
     } else if ( e.keyCode === 40 ) {
       if ( move_piece(game.board, game.current_piece, 'down') ) {
         reset_clock(game);
+      } else {
+        // If down move was unsuccessful, jump to next piece immediately
+        game.current_piece = null;
+        clock_tick(game);
       }
     } else if ( e.keyCode === 65 || e.keyCode === 38 ) { // 65 = letter a, 38 = up arrow
       rotate_piece_on_board(game.board, game.current_piece, true);
@@ -334,6 +338,7 @@ function start_game() {
     }
   });
 
+  clock_tick(game);
   start_clock(game);
 }
 
