@@ -117,9 +117,7 @@ function move_piece(board, piece, direction) {
 
 function add_random_piece(board) {
   var choice = Math.floor((Math.random() * 7)) % 7;
-
-  var piece = {};
-  piece.color = choice + 1;
+  var piece;
 
   if ( choice === 0 ) {
     piece = create_square();
@@ -151,7 +149,7 @@ function add_random_piece(board) {
 
 function create_s_piece() {
   var piece = {};
-  piece.color = 7;
+  piece.color = 1;
 
   piece.rotation_states = [
     [[ 0, 1], [-1, 0], [-1, -1]],
@@ -165,7 +163,7 @@ function create_s_piece() {
 
 function create_backwards_s_piece() {
   var piece = {};
-  piece.color = 6;
+  piece.color = 2;
 
   piece.rotation_states = [
     [[ 0, -1], [-1,  0], [-1,  1]],
@@ -179,7 +177,7 @@ function create_backwards_s_piece() {
 
 function create_square() {
   var piece = {};
-  piece.color = 1;
+  piece.color = 3;
 
   piece.rotation_states = [
     [[0,1], [-1,0], [-1,1]]
@@ -192,7 +190,7 @@ function create_square() {
 
 function create_l() {
   var piece = {};
-  piece.color = 2;
+  piece.color = 4;
 
   piece.rotation_states = [
     [[1,  0], [-1,  0], [-1, 1]],
@@ -208,7 +206,7 @@ function create_l() {
 
 function create_backwards_l() {
   var piece = {};
-  piece.color = 4;
+  piece.color = 5;
 
   piece.rotation_states = [
     [[1,  0], [-1,  0], [-1, -1]],
@@ -224,7 +222,7 @@ function create_backwards_l() {
 
 function create_pyramid() {
   var piece = {};
-  piece.color = 5;
+  piece.color = 6;
 
   piece.rotation_states = [
     [[ 0, -1], [ 0,  1], [ -1, 0]],
@@ -240,7 +238,7 @@ function create_pyramid() {
 
 function create_line() {
   var piece = {};
-  piece.color = 6;
+  piece.color = 7;
 
   piece.rotation_states = [
     [[1, 0],[1,0],[2,0]],
