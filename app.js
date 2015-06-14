@@ -280,32 +280,37 @@ function rotate_piece_on_board(board, piece, left) {
   return true
 }
 
-function clock_tick(board, piece, interval_id) {
-  if ( piece ) {
-    if ( !move_piece(board, piece, 'down') ) {
-      piece = null;
+function clock_tick(game) {
+  if ( game.current_piece ) {
+    if ( !move_piece(game.board, game.current_piece, 'down') ) {
+      game.current_piece = null;
     }
   } else {
-    piece = add_random_piece(board);
+    game.current_piece = add_random_piece(game.board);
 
-    if ( piece === false ) {
+    if ( game.current_piece === false ) {
       console.log('Game Over');
-      clearInterval(interval_id);
+      stop_clock(game);
     }
   }
 
-  render_board(board);
-  return piece;
+  render_board(game.board);
+  return game.current_piece;
+}
+
+function stop_clock(game) {
+  clearInterval(game.interval_id);
+}
+
+function start_clock(game) {
+  game.interval_id = setInterval(function() {
+    game.current_piece = clock_tick(game);
+  }, CLOCK_RATE);
 }
 
 function reset_clock(game) {
-  if ( game.interval_id ) {
-    clearInterval(game.interval_id);
-  }
-
-  game.interval_id = setInterval(function() {
-    game.current_piece = clock_tick(game.board, game.current_piece, game.interval_id);
-  }, CLOCK_RATE);
+  stop_clock(game);
+  start_clock(game);
 }
 
 function start_game() {
@@ -329,7 +334,7 @@ function start_game() {
     }
   });
 
-  reset_clock(game);
+  start_clock(game);
 }
 
 $(function() {
