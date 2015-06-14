@@ -124,13 +124,13 @@ function add_random_piece(board) {
   if ( choice === 0 ) {
     piece = create_square();
   } else if ( choice === 1 ) {
-    piece.offsets = [ [-1,0], [-2,0], [-2,1] ]
+    piece = create_l();
   } else if ( choice === 2 ) {
-    piece.offsets = [ [-1,0], [-2,0], [-2,-1] ]
+    piece = create_backwards_l();
   } else if ( choice === 3 ) {
-    piece.offsets = [ [-1,0], [-1,-1], [-1,1] ] // Pyramid; change to rotate around middle of base
+    piece = create_pyramid();
   } else if ( choice === 4 ) {
-    piece.offsets = [ [-1,0], [-2,0], [-3,0] ]
+    piece = create_line();
   } else if ( choice === 5 ) {
     piece = create_backwards_s_piece();
   } else if ( choice === 6 ) {
@@ -186,6 +186,68 @@ function create_square() {
   ]
 
   piece.rotation_state_index = 0;
+
+  return piece;
+}
+
+function create_l() {
+  var piece = {};
+  piece.color = 2;
+
+  piece.rotation_states = [
+    [[1,  0], [-1,  0], [-1, 1]],
+    [[0, -1], [ 0,  1], [ 1, 1]],
+    [[1, -1], [ 1,  0], [-1, 0]],
+    [[0, -1], [-1, -1], [0, 1]]
+  ]
+
+  piece.rotation_state_index = 3;
+
+  return piece;
+}
+
+function create_backwards_l() {
+  var piece = {};
+  piece.color = 4;
+
+  piece.rotation_states = [
+    [[1,  0], [-1,  0], [-1, -1]],
+    [[0, -1], [ 0,  1], [-1,  1]],
+    [[1,  0], [ 1,  1], [-1,  0]],
+    [[1, -1], [ 0, -1], [ 0,  1]]
+  ]
+
+  piece.rotation_state_index = 1;
+
+  return piece;
+}
+
+function create_pyramid() {
+  var piece = {};
+  piece.color = 5;
+
+  piece.rotation_states = [
+    [[ 0, -1], [ 0,  1], [ -1, 0]],
+    [[ 1,  0], [ 0,  1], [ -1, 0]],
+    [[ 0, -1], [ 1,  0], [  0, 1]],
+    [[ 1,  0], [ 0, -1], [ -1, 0]]
+  ]
+
+  piece.rotation_state_index = 0;
+
+  return piece;
+}
+
+function create_line() {
+  var piece = {};
+  piece.color = 6;
+
+  piece.rotation_states = [
+    [[1, 0],[1,0],[2,0]],
+    [[0,-1],[0,1],[0,2]]
+  ]
+
+  piece.rotation_state_index = 1;
 
   return piece;
 }
