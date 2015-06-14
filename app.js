@@ -312,9 +312,9 @@ function start_game() {
       move_piece(game.board, game.current_piece, 'right');
     } else if ( e.keyCode === 40 ) {
       move_piece(game.board, game.current_piece, 'down');
-      clearInterval(interval_id);
-      interval_id = setInterval(function() {
-        game.current_piece = clock_tick(game.board, game.current_piece, interval_id);
+      clearInterval(game.interval_id);
+      game.interval_id = setInterval(function() {
+        game.current_piece = clock_tick(game.board, game.current_piece, game.interval_id);
       }, CLOCK_RATE);
     } else if ( e.keyCode === 65 || e.keyCode === 38 ) { // 65 = letter a, 38 = up arrow
       rotate_piece_on_board(game.board, game.current_piece, true);
@@ -323,8 +323,8 @@ function start_game() {
     }
   });
 
-  interval_id = setInterval(function() {
-    game.current_piece = clock_tick(game.board, game.current_piece, interval_id);
+  game.interval_id = setInterval(function() {
+    game.current_piece = clock_tick(game.board, game.current_piece, game.interval_id);
   }, CLOCK_RATE);
 }
 
